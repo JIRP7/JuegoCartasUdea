@@ -21,9 +21,9 @@ public class Jugador {
     public void mostrar(JPanel pnl){
         pnl.removeAll();
        
-        int p = 0;
+        int p = 1;
         for (Carta c : cartas) {
-            c.mostrar(pnl, MARGEN + p++ * DISTANCIA, MARGEN);
+            c.mostrar(pnl, MARGEN + TOTAL_CARTAS * DISTANCIA - p++ * DISTANCIA, MARGEN);
         }
         pnl.repaint();
     }
