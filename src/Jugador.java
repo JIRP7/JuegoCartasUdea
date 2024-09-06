@@ -7,7 +7,6 @@ public class Jugador {
     private final int TOTAL_CARTAS = 10;
     private final int MARGEN = 10;
     private final int DISTANCIA = 50;
-
     private Carta[] cartas = new Carta[TOTAL_CARTAS];
     private Random r = new Random();
 
@@ -33,8 +32,8 @@ public class Jugador {
         String mensaje = "No se encontraron figuras";
         int[] contadores = new int[NombreCarta.values().length];
         int[] cartasIndices = new int[TOTAL_CARTAS];
-        String[] listaEscalera = new String[TOTAL_CARTAS];
-        String[] vectorNombreCarta = {"AS", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE", "DIEZ", "JACK", "QUEEN", "KING"};
+        int puntaje = 0;
+        NombreCarta[] listaEscalera = new NombreCarta[TOTAL_CARTAS];
         
         int h = 0;
         for (Carta c : cartas) {
@@ -78,12 +77,14 @@ public class Jugador {
                 if (residuo == 0){
                     residuo = 13;
                 }   
-                listaEscalera[contadorEscalera++] = vectorNombreCarta[residuo - 1];
+                listaEscalera[contadorEscalera++] = NombreCarta.values()[residuo - 1];
+                contadores[residuo] += 2;
                 int residuo_1 = cartasIndices[i+1]% 13;
                 if (residuo_1 == 0){
                     residuo_1 = 13;
                 }   
-                listaEscalera[contadorEscalera++] = vectorNombreCarta[residuo_1 - 1];
+                listaEscalera[contadorEscalera++] = NombreCarta.values()[residuo_1 - 1];
+                contadores[residuo_1] += 2;
             } else {
                 if (contadorEscalera != 0) {
                     escalerasMensaje += "Escalera entre " + listaEscalera[0] + " y " + listaEscalera[contadorEscalera - 1] + " de " + pintaInicial + "\n";
@@ -99,7 +100,12 @@ public class Jugador {
         if (escalerasMensaje.equals("Se encontraron las siguientes escaleras:\n")) {
             escalerasMensaje = "No hay escaleras\n";
         }
-            
-        return mensaje + "\n" + escalerasMensaje;
+        for (int i = 0; i < contadores.length; i++){
+            if (contadores[i] == 1){
+                puntaje += i + 1;
+            }
+        }
+        
+        return mensaje + "\n" + escalerasMensaje + "\n" + "Puntaje de jugador: " + puntaje;
     }
 }

@@ -82,5 +82,4 @@ public class FrmJuego extends JFrame {
                 break;
         }
     }
-
 }
